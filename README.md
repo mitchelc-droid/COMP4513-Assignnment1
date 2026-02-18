@@ -13,7 +13,7 @@ This project is a REST API built with Node.js and Express that serves Spotify so
 
 ## Hosting
 
-> 🔗 **Live API:** [https://your-project.vercel.app](https://your-project.vercel.app)
+> 🔗 **Live API:** [https://spotifydata-fw7wd2cm9-mitchelc-droids-projects.vercel.app](https://spotifydata-fw7wd2cm9-mitchelc-droids-projects.vercel.app) (you will need to add your specific endpoint to this)
 
 ## API Endpoints
 
