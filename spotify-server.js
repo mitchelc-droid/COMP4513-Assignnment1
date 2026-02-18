@@ -8,6 +8,7 @@ const supaAnonKey =
 
 const supabase = supa.createClient(supaUrl, supaAnonKey);
 
+//Response and error handling helper function
 const errorHandling = (res, data, error, notFoundMessage) => {
   if (error) return res.status(500).json({ error: error.message });
   if (!data || data.length === 0)
