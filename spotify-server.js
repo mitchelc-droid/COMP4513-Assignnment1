@@ -67,8 +67,7 @@ app.get("/api/songs", async (req, res) => {
   res.json(data);
 });
 
-//Returns all the songs sorted by order field. Possible values are: (id, title, artist(name), genre(name), year, duration);
-
+//Returns all the songs sorted by order field in ascending order. Possible values are: (id, title, artist(name), genre(name), year, duration);
 app.get("/api/songs/sort/:order", async (req, res) => {
   const orderMap = {
     id: "song_id",
@@ -249,7 +248,7 @@ app.get("/api/mood/dancing/:ref", async (req, res) => {
 app.get("/api/mood/happy/:ref", async (req, res) => {
   let limit = parseInt(req.params.ref);
 
-  if (limit < 1 || limit > 20) {
+  if (!limit || limit < 1 || limit > 20) {
     limit = 20;
   }
 
@@ -276,7 +275,7 @@ app.get("/api/mood/happy", async (req, res) => {
 //Returns the specified number of songs sorted by liveness divided by acousticness in descending order.
 app.get("/api/mood/coffee/:ref", async (req, res) => {
   let limit = parseInt(req.params.ref);
-  if (limit < 1 || limit > 20) limit = 20;
+  if (!limit || limit < 1 || limit > 20) limit = 20;
 
   const { data, error } = await supabase
     .from("songs")
@@ -311,7 +310,7 @@ app.get("/api/mood/coffee", async (req, res) => {
 //Returns the specified number of songs sorted by energy times by speechiness in ascending order.
 app.get("/api/mood/studying/:ref", async (req, res) => {
   let limit = parseInt(req.params.ref);
-  if (limit < 1 || limit > 20) limit = 20;
+  if (!limit || limit < 1 || limit > 20) limit = 20;
 
   const { data, error } = await supabase
     .from("songs")
