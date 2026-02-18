@@ -159,60 +159,60 @@ The `/api/songs/sort/:order` endpoint accepts the following values:
 
 ## Test Links: 
 
-https://comp-4513-assignnment1.vercel.app/api/artists
+1. https://comp-4513-assignnment1.vercel.app/api/artists
 
-https://comp-4513-assignnment1.vercel.app/api/artists/129
+2. https://comp-4513-assignnment1.vercel.app/api/artists/129
 
-https://comp-4513-assignnment1.vercel.app/api/artists/sdfjkhsdf
+3. https://comp-4513-assignnment1.vercel.app/api/artists/sdfjkhsdf
 
-https://comp-4513-assignnment1.vercel.app/api/artists/averages/129
+4. https://comp-4513-assignnment1.vercel.app/api/artists/averages/129
 
-https://comp-4513-assignnment1.vercel.app/api/genres
+5. https://comp-4513-assignnment1.vercel.app/api/genres
 
-https://comp-4513-assignnment1.vercel.app/api/songs
+6. https://comp-4513-assignnment1.vercel.app/api/songs
 
-https://comp-4513-assignnment1.vercel.app/api/songs/sort/artist
+7. https://comp-4513-assignnment1.vercel.app/api/songs/sort/artist
 
-https://comp-4513-assignnment1.vercel.app/api/songs/sort/year
+8. https://comp-4513-assignnment1.vercel.app/api/songs/sort/year
 
-https://comp-4513-assignnment1.vercel.app/api/songs/sort/duration
+9. https://comp-4513-assignnment1.vercel.app/api/songs/sort/duration
 
-https://comp-4513-assignnment1.vercel.app/api/songs/1010
+12. https://comp-4513-assignnment1.vercel.app/api/songs/1010
 
-https://comp-4513-assignnment1.vercel.app/api/songs/sjdkfhsdkjf
+13. https://comp-4513-assignnment1.vercel.app/api/songs/sjdkfhsdkjf
 
-https://comp-4513-assignnment1.vercel.app/api/songs/search/begin/love
+14. https://comp-4513-assignnment1.vercel.app/api/songs/search/begin/love
 
-https://comp-4513-assignnment1.vercel.app/api/songs/search/begin/sdjfhs
+15. https://comp-4513-assignnment1.vercel.app/api/songs/search/begin/sdjfhs
 
-https://comp-4513-assignnment1.vercel.app/api/songs/search/any/love
+16. https://comp-4513-assignnment1.vercel.app/api/songs/search/any/love
 
-https://comp-4513-assignnment1.vercel.app/api/songs/search/year/2017
+17. https://comp-4513-assignnment1.vercel.app/api/songs/search/year/2017
 
-https://comp-4513-assignnment1.vercel.app/api/songs/search/year/2027
+18. https://comp-4513-assignnment1.vercel.app/api/songs/search/year/2027
 
-https://comp-4513-assignnment1.vercel.app/api/songs/artist/149
+19. https://comp-4513-assignnment1.vercel.app/api/songs/artist/149
 
-https://comp-4513-assignnment1.vercel.app/api/songs/artist/7834562
+20. https://comp-4513-assignnment1.vercel.app/api/songs/artist/7834562
 
-https://comp-4513-assignnment1.vercel.app/api/songs/genre/115
+21. https://comp-4513-assignnment1.vercel.app/api/songs/genre/115
 
-https://comp-4513-assignnment1.vercel.app/api/playlists
+22. https://comp-4513-assignnment1.vercel.app/api/playlists
 
-https://comp-4513-assignnment1.vercel.app/api/playlists/3
+23. https://comp-4513-assignnment1.vercel.app/api/playlists/3
 
-https://comp-4513-assignnment1.vercel.app/api/playlists/35362
+24. https://comp-4513-assignnment1.vercel.app/api/playlists/35362
 
-https://comp-4513-assignnment1.vercel.app/api/mood/dancing/5
+25. https://comp-4513-assignnment1.vercel.app/api/mood/dancing/5
 
-https://comp-4513-assignnment1.vercel.app/api/mood/dancing/500
+26. https://comp-4513-assignnment1.vercel.app/api/mood/dancing/500
 
-https://comp-4513-assignnment1.vercel.app/api/mood/dancing/ksdjf
+27. https://comp-4513-assignnment1.vercel.app/api/mood/dancing/ksdjf
 
-https://comp-4513-assignnment1.vercel.app/api/mood/happy/8
+28. https://comp-4513-assignnment1.vercel.app/api/mood/happy/8
 
-https://comp-4513-assignnment1.vercel.app/api/mood/happy
+29. https://comp-4513-assignnment1.vercel.app/api/mood/happy
 
-https://comp-4513-assignnment1.vercel.app/api/mood/coffee/10
+30. https://comp-4513-assignnment1.vercel.app/api/mood/coffee/10
 
-https://comp-4513-assignnment1.vercel.app/api/mood/studying/15
+31. https://comp-4513-assignnment1.vercel.app/api/mood/studying/15
