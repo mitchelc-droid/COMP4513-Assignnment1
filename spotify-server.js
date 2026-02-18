@@ -162,12 +162,7 @@ app.get("/api/songs/search/year/:substring", async (req, res) => {
     .select("*, artists(artist_id, artist_name), genres(genre_id, genre_name)")
     .eq("year", req.params.substring);
 
-  errorHandling(
-    res,
-    data,
-    error,
-    `No songs found from ${req.params.substring}`,
-  );
+  errorHandling(res, data, error, `No songs found from ${req.params.substring}`, );
 });
 
 //Returns all the songs for the specified artist
@@ -177,7 +172,7 @@ app.get("/api/songs/artist/:ref", async (req, res) => {
     .select("*, artists(artist_id, artist_name), genres(genre_id, genre_name)")
     .eq("artist_id", req.params.ref);
 
-  errorHandling(res, data, error, `No songs found for artist ID: ${req.params.ref}`);
+  errorHandling(res, data, error, `No songs found for artist ID: ${req.params.ref}`,);
 });
 
 //Returns all the songs for the specified genre
@@ -193,6 +188,27 @@ app.get("/api/songs/genre/:ref", async (req, res) => {
     error,
     `No songs found from the ${req.params.ref} genre`,
   );
+});
+
+//Returns all the songs for the specified playlist
+app.get("/api/playlists/:ref", async (req, res) => {
+  const { data, error } = await supabase
+    .from("playlists")
+    .select(
+      "*, songs(song_id, title, year, genres(genre_name), artists(artist_name))",
+    )
+    .eq("playlist_id", req.params.ref);
+
+  errorHandling(res, data, error, `No songs found belonging to playlist #: ${req.params.ref}`, );
+});
+
+//Returns all the songs for the specified playlist
+app.get("/api/playlists/", async (req, res) => {
+  const { data, error } = await supabase
+    .from("playlists")
+    .select()
+
+  errorHandling(res, data, error, "No playlists found", );
 });
 
 //Returns all the songs for the specified playlist
@@ -233,7 +249,7 @@ app.get("/api/mood/dancing/:ref", async (req, res) => {
 app.get("/api/mood/happy/:ref", async (req, res) => {
   let limit = parseInt(req.params.ref);
 
-  if (!limit || limit < 1 || limit > 20) {
+  if (limit < 1 || limit > 20) {
     limit = 20;
   }
 
@@ -246,10 +262,21 @@ app.get("/api/mood/happy/:ref", async (req, res) => {
   errorHandling(res, data, error, "No songs found");
 });
 
+//Returns the top 20 songs ranked from highest to lowest valence.
+app.get("/api/mood/happy", async (req, res) => {
+  const { data, error } = await supabase
+    .from("songs")
+    .select("*, artists(artist_id, artist_name), genres(genre_id, genre_name)")
+    .order("valence", { ascending: false })
+    .limit(20);
+
+  errorHandling(res, data, error, "No songs found");
+});
+
 //Returns the specified number of songs sorted by liveness divided by acousticness in descending order.
 app.get("/api/mood/coffee/:ref", async (req, res) => {
   let limit = parseInt(req.params.ref);
-  if (!limit || limit < 1 || limit > 20) limit = 20;
+  if (limit < 1 || limit > 20) limit = 20;
 
   const { data, error } = await supabase
     .from("songs")
@@ -258,8 +285,25 @@ app.get("/api/mood/coffee/:ref", async (req, res) => {
   if (error) return res.status(500).json({ error: error.message });
 
   const sorted = data
+    .filter((song) => song.speechiness > 0) //Dropping any songs with 0 speechiness
     .sort((a, b) => b.liveness / b.acousticness - a.liveness / a.acousticness)
     .slice(0, limit);
+
+  errorHandling(res, sorted, null, "No songs found");
+});
+
+//Returns the top 20 songs sorted by liveness divided by acousticness in descending order. *For handling missing params
+app.get("/api/mood/coffee", async (req, res) => {
+  const { data, error } = await supabase
+    .from("songs")
+    .select("*, artists(artist_id, artist_name), genres(genre_id, genre_name)");
+
+  if (error) return res.status(500).json({ error: error.message });
+
+  const sorted = data
+    .filter((song) => song.speechiness > 0) //Dropping any songs with 0 speechiness
+    .sort((a, b) => b.liveness / b.acousticness - a.liveness / a.acousticness)
+    .slice(0, 20);
 
   errorHandling(res, sorted, null, "No songs found");
 });
@@ -267,7 +311,7 @@ app.get("/api/mood/coffee/:ref", async (req, res) => {
 //Returns the specified number of songs sorted by energy times by speechiness in ascending order.
 app.get("/api/mood/studying/:ref", async (req, res) => {
   let limit = parseInt(req.params.ref);
-  if (!limit || limit < 1 || limit > 20) limit = 20;
+  if (limit < 1 || limit > 20) limit = 20;
 
   const { data, error } = await supabase
     .from("songs")
@@ -278,6 +322,21 @@ app.get("/api/mood/studying/:ref", async (req, res) => {
   const sorted = data
     .sort((a, b) => a.energy * a.speechiness - b.energy * b.speechiness)
     .slice(0, limit);
+
+  errorHandling(res, sorted, null, "No songs found");
+});
+
+//Returns the top 20 songs sorted by energy times by speechiness in ascending order. *For handling missing params
+app.get("/api/mood/studying", async (req, res) => {
+  const { data, error } = await supabase
+    .from("songs")
+    .select("*, artists(artist_id, artist_name), genres(genre_id, genre_name)");
+
+  if (error) return res.status(500).json({ error: error.message });
+
+  const sorted = data
+    .sort((a, b) => a.energy * a.speechiness - b.energy * b.speechiness)
+    .slice(0, 20);
 
   errorHandling(res, sorted, null, "No songs found");
 });
