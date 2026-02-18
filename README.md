@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project is a REST API built with Node.js and Express that serves Spotify song data including songs, artists, genres, and playlists. Data is sourced from a Supabase cloud database and all responses are returned in JSON format.
+This project is a REST API built with Node.js and Express that serves Spotify song data (2016-2019) including songs, artists, genres, and playlists. Data is sourced from a Supabase cloud database and all responses are returned in JSON format.
 
 ## Built With
 
@@ -144,7 +144,7 @@ This project is a REST API built with Node.js and Express that serves Spotify so
 ]
 ```
 
-## Sort Options
+## Sort Options (ascending)
 
 The `/api/songs/sort/:order` endpoint accepts the following values:
 
