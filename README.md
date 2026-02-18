@@ -1,4 +1,4 @@
-# COMP 4513 – Assignment #1
+# COMP 4513 – Spotify API
 
 ## Overview
 
@@ -46,28 +46,100 @@ This project is a REST API built with Node.js and Express that serves Spotify so
 
 **Response:**
 ```json
-{
-  "artist_id": 129,
-  "artist_name": "Ed Sheeran",
-  "types": { "type_name": "Solo" },
-  "artist_image_url": "https://...",
-  "spotify_url": "https://...",
-  "spotify_desc": "..."
-}
+[
+  {
+    "artist_id": 129,
+    "artist_name": "Post Malone",
+    "artist_image_url": "https://i.scdn.co/image/ab6761610000f178b894ef9fa437b0389c5567cc",
+    "spotify_url": "https://open.spotify.com/artist/246dkjvS1zLTtiykXe5h60",
+    "spotify_desc": "Diamond-certified American hitmaker Post Malone bridges the gap between the worlds of rap and the pop mainstream. Within five years of his debut, he went from underground genre novelty to certified superstar, amassing a string of Top Ten singles with a hybrid style that combined his unique vocal delivery, pained lyrics, and hip-hop production inspired as much by Tim McGraw as Kanye West.",
+    "types": {
+      "type_name": "Solo"
+    }
+  }
+]
 ```
 
-### Get top 5 songs for dancing
-**Request:** `/api/mood/dancing/5`
+### Get top 3 songs for dancing
+**Request:** `/api/mood/dancing/3`
 
 **Response:**
 ```json
 [
   {
-    "song_id": 204,
-    "title": "Mi Gente",
-    "danceability": 0.935,
-    "artists": { "artist_id": 55, "artist_name": "J Balvin" },
-    "genres": { "genre_id": 7, "genre_name": "Latin" }
+    "song_id": 1052,
+    "title": "Yes Indeed",
+    "artist_id": 80,
+    "genre_id": 104,
+    "year": 2018,
+    "bpm": 120,
+    "energy": 35,
+    "danceability": 96,
+    "loudness": -9,
+    "liveness": 11,
+    "valence": 56,
+    "duration": 142,
+    "acousticness": 4,
+    "speechiness": 53,
+    "popularity": 84,
+    "artists": {
+      "artist_id": 80,
+      "artist_name": "Lil Baby"
+    },
+    "genres": {
+      "genre_id": 104,
+      "genre_name": "atl hip hop"
+    }
+  },
+  {
+    "song_id": 1023,
+    "title": "Money",
+    "artist_id": 27,
+    "genre_id": 110,
+    "year": 2018,
+    "bpm": 130,
+    "energy": 59,
+    "danceability": 95,
+    "loudness": -7,
+    "liveness": 11,
+    "valence": 22,
+    "duration": 184,
+    "acousticness": 1,
+    "speechiness": 29,
+    "popularity": 78,
+    "artists": {
+      "artist_id": 27,
+      "artist_name": "Cardi B"
+    },
+    "genres": {
+      "genre_id": 110,
+      "genre_name": "dance pop"
+    }
+  },
+  {
+    "song_id": 1281,
+    "title": "Gucci Gang",
+    "artist_id": 83,
+    "genre_id": 112,
+    "year": 2017,
+    "bpm": 120,
+    "energy": 52,
+    "danceability": 94,
+    "loudness": -7,
+    "liveness": 12,
+    "valence": 70,
+    "duration": 124,
+    "acousticness": 24,
+    "speechiness": 6,
+    "popularity": 69,
+    "artists": {
+      "artist_id": 83,
+      "artist_name": "Lil Pump"
+    },
+    "genres": {
+      "genre_id": 112,
+      "genre_name": "emo rap"
+    }
   }
 ]
 ```
@@ -79,11 +151,11 @@ The `/api/songs/sort/:order` endpoint accepts the following values:
 | Value | Sorts By |
 |-------|----------|
 | `id` | song_id |
-| `title` | Song title |
-| `artist` | Artist name |
-| `genre` | Genre name |
-| `year` | Release year |
-| `duration` | Song duration |
+| `title` | title |
+| `artist` | artist_name |
+| `genre` | genre_name |
+| `year` | year |
+| `duration` | duration |
 
 ## Test Links: 
 
