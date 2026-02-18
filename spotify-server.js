@@ -25,7 +25,8 @@ app.get("/api/artists", async (req, res) => {
     )
     .order("artist_name");
 
-  res.json(data);
+  errorHandling(res, data, error, "");
+
 });
 
 //Returns the specified artist using the artist_id.
