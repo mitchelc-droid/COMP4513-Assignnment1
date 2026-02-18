@@ -8,6 +8,13 @@ const supaAnonKey =
 
 const supabase = supa.createClient(supaUrl, supaAnonKey);
 
+const errorHandling = (res, data, error, notFoundMessage) => {
+  if (error) return res.status(500).json({ error: error.message });
+  if (!data || data.length === 0)
+    return res.status(404).json({ error: notFoundMessage });
+  res.json(data);
+};
+
 //Returns all data for all artists sorted by artist_name.
 app.get("/api/artists", async (req, res) => {
   const { data, error } = await supabase
@@ -20,7 +27,7 @@ app.get("/api/artists", async (req, res) => {
   res.json(data);
 });
 
-//Returns just the specified artist using the artist_id.
+//Returns the specified artist using the artist_id.
 app.get("/api/artists/:ref", async (req, res) => {
   const { data, error } = await supabase
     .from("artists")
@@ -29,13 +36,7 @@ app.get("/api/artists/:ref", async (req, res) => {
     )
     .eq("artist_id", req.params.ref);
 
-  //Error handling
-  if (error) return res.status(500).json({ error: error.message });
-  if (data) {
-    res.json(data);
-  } else {
-    res.status(404).json({ error: "No artist with ID:" + req.params.ref });
-  }
+  errorHandling(res, data, error, `No artist found with ID ${req.params.ref}`);
 });
 
 /*Returns the average values for bpm, energy,
@@ -47,13 +48,7 @@ app.get("/api/artists/averages/:ref", async (req, res) => {
     artist_id_param: req.params.ref,
   });
 
-  //Error handling NEED TO REDO
-  if (error) return res.status(500).json({ error: error.message });
-  if (data) {
-    res.json(data);
-  } else {
-    res.status(404).json({ error: "No artist with ID:" + req.params.ref });
-  }
+  errorHandling(res, data, error, `No artist found with ID ${req.params.ref}`);
 });
 
 //Returns all the genres
@@ -72,6 +67,7 @@ app.get("/api/songs", async (req, res) => {
 });
 
 //Returns all the songs sorted by order field. Possible values are: (id, title, artist(name), genre(name), year, duration);
+
 app.get("/api/songs/sort/:order", async (req, res) => {
   const orderMap = {
     id: "song_id",
@@ -115,7 +111,8 @@ app.get("/api/songs/sort/:order", async (req, res) => {
     });
   }
 
-  res.json(data);
+  // moved to the end, and use data (the final result)
+  errorHandling(res, data, null, "No songs found");
 });
 
 //Returns just the specified song using the song_id field.
@@ -124,7 +121,7 @@ app.get("/api/songs/:ref", async (req, res) => {
     .from("songs")
     .select()
     .eq("song_id", req.params.ref);
-  res.json(data);
+  errorHandling(res, data, error, `No song found with ID ${req.params.ref}`);
 });
 
 //Returns the songs whose title BEGINS with the provided substring
@@ -134,8 +131,12 @@ app.get("/api/songs/search/begin/:substring", async (req, res) => {
     .select("*, artists (artist_name)")
     .ilike("title", `${req.params.substring}%`);
 
-  if (error) return res.status(500).json({ error: error.message });
-  res.json(data);
+  errorHandling(
+    res,
+    data,
+    error,
+    `No songs found beginning with ${req.params.substring}`,
+  );
 });
 
 //Returns the songs whose title contains the provided substring
@@ -145,8 +146,12 @@ app.get("/api/songs/search/any/:substring", async (req, res) => {
     .select("*, artists(artist_id, artist_name), genres(genre_id, genre_name)")
     .ilike("title", `%${req.params.substring}%`);
 
-  if (error) return res.status(500).json({ error: error.message });
-  res.json(data);
+  errorHandling(
+    res,
+    data,
+    error,
+    `No songs found containing ${req.params.substring}`,
+  );
 });
 
 //Returns the songs whose year is equal to the provided substring
@@ -156,8 +161,12 @@ app.get("/api/songs/search/year/:substring", async (req, res) => {
     .select("*, artists(artist_id, artist_name), genres(genre_id, genre_name)")
     .eq("year", req.params.substring);
 
-  if (error) return res.status(500).json({ error: error.message });
-  res.json(data);
+  errorHandling(
+    res,
+    data,
+    error,
+    `No songs found from ${req.params.substring}`,
+  );
 });
 
 //Returns all the songs for the specified artist
@@ -167,8 +176,7 @@ app.get("/api/songs/artist/:ref", async (req, res) => {
     .select("*, artists(artist_id, artist_name), genres(genre_id, genre_name)")
     .eq("artist_id", req.params.ref);
 
-  if (error) return res.status(500).json({ error: error.message });
-  res.json(data);
+  errorHandling(res, data, error, `No songs found for artist ID: ${req.params.ref}`);
 });
 
 //Returns all the songs for the specified genre
@@ -178,8 +186,12 @@ app.get("/api/songs/genre/:ref", async (req, res) => {
     .select("*, artists(artist_id, artist_name), genres(genre_id, genre_name)")
     .eq("genre_id", req.params.ref);
 
-  if (error) return res.status(500).json({ error: error.message });
-  res.json(data);
+  errorHandling(
+    res,
+    data,
+    error,
+    `No songs found from the ${req.params.ref} genre`,
+  );
 });
 
 //Returns all the songs for the specified playlist
@@ -191,8 +203,12 @@ app.get("/api/playlists/:ref", async (req, res) => {
     )
     .eq("playlist_id", req.params.ref);
 
-  if (error) return res.status(500).json({ error: error.message });
-  res.json(data);
+  errorHandling(
+    res,
+    data,
+    error,
+    `No songs found belonging to playlist #: ${req.params.ref}`,
+  );
 });
 
 //Returns the specified number of songs ranked from highest to lowest danceability.
@@ -209,8 +225,7 @@ app.get("/api/mood/dancing/:ref", async (req, res) => {
     .order("danceability", { ascending: false })
     .limit(limit);
 
-  if (error) return res.status(500).json({ error: error.message });
-  res.json(data);
+  errorHandling(res, data, error, "No songs found");
 });
 
 //Returns the specified number of songs ranked from highest to lowest valence.
@@ -227,8 +242,7 @@ app.get("/api/mood/happy/:ref", async (req, res) => {
     .order("valence", { ascending: false })
     .limit(limit);
 
-  if (error) return res.status(500).json({ error: error.message });
-  res.json(data);
+  errorHandling(res, data, error, "No songs found");
 });
 
 //Returns the specified number of songs sorted by liveness divided by acousticness in descending order.
@@ -246,7 +260,7 @@ app.get("/api/mood/coffee/:ref", async (req, res) => {
     .sort((a, b) => b.liveness / b.acousticness - a.liveness / a.acousticness)
     .slice(0, limit);
 
-  res.json(sorted);
+  errorHandling(res, sorted, null, "No songs found");
 });
 
 //Returns the specified number of songs sorted by energy times by speechiness in ascending order.
@@ -264,7 +278,7 @@ app.get("/api/mood/studying/:ref", async (req, res) => {
     .sort((a, b) => a.energy * a.speechiness - b.energy * b.speechiness)
     .slice(0, limit);
 
-  res.json(sorted);
+  errorHandling(res, sorted, null, "No songs found");
 });
 
 app.listen(8080, () => {
